@@ -5,7 +5,7 @@ import QtQuick.Window 2.11
 
 Dialog {
     id: alarmDialog
-    title: "Add new alarm"
+    title: "Add alarm"
     modal: true
     standardButtons: DialogButtonBox.Ok | DialogButtonBox.Cancel
 
@@ -26,13 +26,13 @@ Dialog {
             "label": "",
             "repeat": false,
             "daysToRepeat": [
-                { "dayOfWeek": 0, "repeat": false },
                 { "dayOfWeek": 1, "repeat": false },
                 { "dayOfWeek": 2, "repeat": false },
                 { "dayOfWeek": 3, "repeat": false },
                 { "dayOfWeek": 4, "repeat": false },
                 { "dayOfWeek": 5, "repeat": false },
-                { "dayOfWeek": 6, "repeat": false }
+                { "dayOfWeek": 6, "repeat": false }, // sat
+                { "dayOfWeek": 0, "repeat": false }, // sun
             ],
         })
     }

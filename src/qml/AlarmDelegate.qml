@@ -8,12 +8,11 @@ ItemDelegate {
     id: root
     width: parent.width
     checkable: true
-
     onClicked: ListView.view.currentIndex = index
-
     contentItem: ColumnLayout {
         spacing: 0
 
+        // alarm overview
         RowLayout {
             ColumnLayout {
                 id: dateColumn
@@ -27,15 +26,55 @@ ItemDelegate {
                     text: dateColumn.alarmDate.toLocaleTimeString(window.locale, Locale.ShortFormat)
                 }
                 RowLayout {
+                    // repeat label
                     Label {
-                        id: dateLabel
-                        text: dateColumn.alarmDate.toLocaleDateString(window.locale, Locale.ShortFormat)
+                        id: alarm_days
+                        visible: model.repeat && !root.checked
+                        font.capitalization: Font.Capitalize
+                        function get_string(){
+                            var str = "";
+                            for (let i = 0; i < model.daysToRepeat.count; ++i) {
+                                let day = model.daysToRepeat.get(i);
+                                if (day.repeat) {
+                                    str += Qt.locale().dayName(day.dayOfWeek, Locale.NarrowFormat) + " ";
+                                }
+                            }
+                            
+                            str += "⸱"
+                            return str;
+                        }
+                        text: get_string()
                     }
+
+                    // alarm label
                     Label {
                         id: alarmAbout
-                        text: "⸱ " + model.label
+                        text: model.label
                         visible: model.label.length > 0 && !root.checked
                     }
+
+                    /*
+                    // repeater
+                    Item {
+                        visible: model.repeat
+
+                        Repeater {
+                            id: repeat_label
+                            model: daysToRepeat
+                            delegate: Label {
+                                text: Qt.locale().dayName(model.dayOfWeek, Locale.NarrowFormat)
+                                font.capitalization: Font.Capitalize
+                                visible: model.repeat
+                            }
+                        }
+
+                        Label {
+                            id: spacer
+                            text: "⸱ "
+                            visible: model.repeat
+                        }
+                    }
+                    */
                 }
             }
             Item {
@@ -47,6 +86,8 @@ ItemDelegate {
                 onClicked: model.activated = checked
             }
         }
+
+        // alarm toggle
         CheckBox {
             id: alarmRepeat
             text: qsTr("Repeat")
@@ -54,6 +95,11 @@ ItemDelegate {
             visible: root.checked
             onToggled: model.repeat = checked
         }
+
+        // this is the expanding section bellow
+        // visible when root.checked
+
+        // flow is the repeating day names
         Flow {
             visible: root.checked && model.repeat
             Layout.fillWidth: true
@@ -63,6 +109,7 @@ ItemDelegate {
                 model: daysToRepeat
                 delegate: RoundButton {
                     text: Qt.locale().dayName(model.dayOfWeek, Locale.NarrowFormat)
+                    font.capitalization: Font.Capitalize
                     flat: true
                     checked: model.repeat
                     checkable: true
