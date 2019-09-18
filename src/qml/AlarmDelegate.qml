@@ -21,7 +21,7 @@ ItemDelegate {
                     model.year, model.month - 1, model.day, model.hour, model.minute)
 
                 Label {
-                    id: timeLabel
+                    id: time_label
                     font.pixelSize: Qt.application.font.pixelSize * 2
                     text: dateColumn.alarmDate.toLocaleTimeString(window.locale, Locale.ShortFormat)
                 }
@@ -33,10 +33,10 @@ ItemDelegate {
                         font.capitalization: Font.Capitalize
                         function get_string(){
                             var str = "";
-                            for (let i = 0; i < model.daysToRepeat.count; ++i) {
-                                let day = model.daysToRepeat.get(i);
+                            for (let i = 0; i < model.repeat_list.count; ++i) {
+                                let day = model.repeat_list.get(i);
                                 if (day.repeat) {
-                                    str += Qt.locale().dayName(day.dayOfWeek, Locale.NarrowFormat) + " ";
+                                    str += Qt.locale().dayName(day.day_of_week, Locale.NarrowFormat) + " ";
                                 }
                             }
                             
@@ -48,33 +48,10 @@ ItemDelegate {
 
                     // alarm label
                     Label {
-                        id: alarmAbout
+                        id: alarm_label
                         text: model.label
                         visible: model.label.length > 0 && !root.checked
                     }
-
-                    /*
-                    // repeater
-                    Item {
-                        visible: model.repeat
-
-                        Repeater {
-                            id: repeat_label
-                            model: daysToRepeat
-                            delegate: Label {
-                                text: Qt.locale().dayName(model.dayOfWeek, Locale.NarrowFormat)
-                                font.capitalization: Font.Capitalize
-                                visible: model.repeat
-                            }
-                        }
-
-                        Label {
-                            id: spacer
-                            text: "⸱ "
-                            visible: model.repeat
-                        }
-                    }
-                    */
                 }
             }
             Item {
@@ -89,7 +66,7 @@ ItemDelegate {
 
         // alarm toggle
         CheckBox {
-            id: alarmRepeat
+            id: alarm_repeat
             text: qsTr("Repeat")
             checked: model.repeat
             visible: root.checked
@@ -105,10 +82,10 @@ ItemDelegate {
             Layout.fillWidth: true
 
             Repeater {
-                id: dayRepeater
-                model: daysToRepeat
+                id: day_repeater
+                model: repeat_list
                 delegate: RoundButton {
-                    text: Qt.locale().dayName(model.dayOfWeek, Locale.NarrowFormat)
+                    text: Qt.locale().dayName(model.day_of_week, Locale.NarrowFormat)
                     font.capitalization: Font.Capitalize
                     flat: true
                     checked: model.repeat
@@ -120,7 +97,7 @@ ItemDelegate {
         }
 
         TextField {
-            id: alarmDescriptionTextField
+            id: alarm_description
             placeholderText: qsTr("Enter description here")
             cursorVisible: true
             visible: root.checked
@@ -128,7 +105,7 @@ ItemDelegate {
             onTextEdited: model.label = text
         }
         Button {
-            id: deleteAlarmButton
+            id: delete_alarm
             text: qsTr("Delete")
             width: 40
             height: 40

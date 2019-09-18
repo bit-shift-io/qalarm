@@ -25,14 +25,14 @@ Dialog {
             "activated": true,
             "label": "",
             "repeat": false,
-            "daysToRepeat": [
-                { "dayOfWeek": 1, "repeat": false },
-                { "dayOfWeek": 2, "repeat": false },
-                { "dayOfWeek": 3, "repeat": false },
-                { "dayOfWeek": 4, "repeat": false },
-                { "dayOfWeek": 5, "repeat": false },
-                { "dayOfWeek": 6, "repeat": false }, // sat
-                { "dayOfWeek": 0, "repeat": false }, // sun
+            "repeat_list": [
+                { "day_of_week": 1, "repeat": false },
+                { "day_of_week": 2, "repeat": false },
+                { "day_of_week": 3, "repeat": false },
+                { "day_of_week": 4, "repeat": false },
+                { "day_of_week": 5, "repeat": false },
+                { "day_of_week": 6, "repeat": false }, // sat
+                { "day_of_week": 0, "repeat": false }, // sun
             ],
         })
     }

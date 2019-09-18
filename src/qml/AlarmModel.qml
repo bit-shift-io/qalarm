@@ -13,14 +13,14 @@ ListModel {
         activated: true
         label: "Work"
         repeat: true
-        daysToRepeat: [
-            ListElement { dayOfWeek: 1; repeat: true },
-            ListElement { dayOfWeek: 2; repeat: true },
-            ListElement { dayOfWeek: 3; repeat: true },
-            ListElement { dayOfWeek: 4; repeat: true },
-            ListElement { dayOfWeek: 5; repeat: false },
-            ListElement { dayOfWeek: 6; repeat: false },
-            ListElement { dayOfWeek: 0; repeat: true }
+        repeat_list: [
+            ListElement { day_of_week: 1; repeat: true },
+            ListElement { day_of_week: 2; repeat: true },
+            ListElement { day_of_week: 3; repeat: true },
+            ListElement { day_of_week: 4; repeat: true },
+            ListElement { day_of_week: 5; repeat: false },
+            ListElement { day_of_week: 6; repeat: false },
+            ListElement { day_of_week: 0; repeat: true }
         ]
     }
     ListElement {
@@ -32,33 +32,14 @@ ListModel {
         activated: true
         label: "Work"
         repeat: true
-        daysToRepeat: [
-            ListElement { dayOfWeek: 1; repeat: false },
-            ListElement { dayOfWeek: 2; repeat: true },
-            ListElement { dayOfWeek: 3; repeat: false },
-            ListElement { dayOfWeek: 4; repeat: true },
-            ListElement { dayOfWeek: 5; repeat: false },
-            ListElement { dayOfWeek: 6; repeat: false },
-            ListElement { dayOfWeek: 0; repeat: true }
-        ]
-    }
-    ListElement {
-        hour: 7
-        minute: 0
-        day: 3
-        month: 8
-        year: 2018
-        activated: false
-        label: "Excersise"
-        repeat: true
-        daysToRepeat: [
-            ListElement { dayOfWeek: 1; repeat: true },
-            ListElement { dayOfWeek: 2; repeat: true },
-            ListElement { dayOfWeek: 3; repeat: true },
-            ListElement { dayOfWeek: 4; repeat: true },
-            ListElement { dayOfWeek: 5; repeat: true },
-            ListElement { dayOfWeek: 6; repeat: true },
-            ListElement { dayOfWeek: 0; repeat: true }
+        repeat_list: [
+            ListElement { day_of_week: 1; repeat: false },
+            ListElement { day_of_week: 2; repeat: true },
+            ListElement { day_of_week: 3; repeat: false },
+            ListElement { day_of_week: 4; repeat: true },
+            ListElement { day_of_week: 5; repeat: false },
+            ListElement { day_of_week: 6; repeat: false },
+            ListElement { day_of_week: 0; repeat: true }
         ]
     }
     ListElement {
@@ -70,14 +51,14 @@ ListModel {
         activated: true
         label: "Tomorrow"
         repeat: false
-        daysToRepeat: [
-            ListElement { dayOfWeek: 1; repeat: false },
-            ListElement { dayOfWeek: 2; repeat: false },
-            ListElement { dayOfWeek: 3; repeat: false },
-            ListElement { dayOfWeek: 4; repeat: false },
-            ListElement { dayOfWeek: 5; repeat: false },
-            ListElement { dayOfWeek: 6; repeat: false },
-            ListElement { dayOfWeek: 0; repeat: true }
+        repeat_list: [
+            ListElement { day_of_week: 1; repeat: false },
+            ListElement { day_of_week: 2; repeat: false },
+            ListElement { day_of_week: 3; repeat: false },
+            ListElement { day_of_week: 4; repeat: false },
+            ListElement { day_of_week: 5; repeat: false },
+            ListElement { day_of_week: 6; repeat: false },
+            ListElement { day_of_week: 0; repeat: true }
         ]
     }
 }
