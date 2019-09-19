@@ -13,16 +13,43 @@ find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 # Telling CMake location of our .qrc file
 qt5_add_resources(APP_RESOURCES ${CMAKE_CURRENT_LIST_DIR}/src/qml/qml.qrc)
 
+
 set(SOURCES 
     src/main.cpp
 )
 
-# our executable
-add_executable(
-    ${PROJECT_NAME}
-    ${SOURCES}
-    ${APP_RESOURCES}    # App resources file
-)
+# for future use
+if(ANDROID)
+    # as library
+    add_library(
+        ${PROJECT_NAME}
+        ${SOURCES}
+        ${APP_RESOURCES}
+    )
+else()
+    # as executable
+    add_executable(
+        ${PROJECT_NAME}
+        ${SOURCES}
+        ${APP_RESOURCES}    # App resources file
+    )
+endif()
+
+# more android specifics
+# https://github.com/LaurentGomila/qt-android-cmake
+if(ANDROID)
+    include(android/AddQtAndroidApk.cmake)
+    add_qt_android_apk(
+        my_app_apk my_app
+        NAME "My App"
+        VERSION_CODE 6 #  incremented everytime your app is updated on the play store
+        PACKAGE_NAME "io.bitshift.qalarm"
+        PACKAGE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/android
+        KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore myalias
+        INSTALL # install to default adb device
+    )
+endif()
+
 
 target_compile_definitions(
     ${PROJECT_NAME}
