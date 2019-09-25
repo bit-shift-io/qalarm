@@ -7,6 +7,11 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    // used for settings
+    app.setOrganizationName("bitshift");
+    app.setOrganizationDomain("bitshift.io");
+    app.setApplicationName("Alarm");
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

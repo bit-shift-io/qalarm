@@ -1,8 +1,9 @@
 import QtQuick 2.11
+import Qt.labs.settings 1.0
 
 // Populate the model with some sample data.
 ListModel {
-    id: alarmModel
+    id: alarm_model
 
     ListElement {
         hour: 7
