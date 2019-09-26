@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.11
 import QtQuick.Window 2.11
 
 ItemDelegate {
-    id: root
+    id: alarm_delegate
     width: parent.width
     checkable: true
     onClicked: ListView.view.currentIndex = index
@@ -29,7 +29,7 @@ ItemDelegate {
                     // repeat label
                     Label {
                         id: alarm_days
-                        visible: model.repeat && !root.checked
+                        visible: model.repeat && !alarm_delegate.checked
                         font.capitalization: Font.Capitalize
                         function get_string(){
                             var str = "";
@@ -50,7 +50,7 @@ ItemDelegate {
                     Label {
                         id: alarm_label
                         text: model.label
-                        visible: model.label.length > 0 && !root.checked
+                        visible: model.label.length > 0 && !alarm_delegate.checked
                     }
                 }
             }
@@ -69,16 +69,16 @@ ItemDelegate {
             id: alarm_repeat
             text: qsTr("Repeat")
             checked: model.repeat
-            visible: root.checked
+            visible: alarm_delegate.checked
             onToggled: model.repeat = checked
         }
 
         // this is the expanding section bellow
-        // visible when root.checked
+        // visible when alarm_delegate.checked
 
         // flow is the repeating day names
         Flow {
-            visible: root.checked && model.repeat
+            visible: alarm_delegate.checked && model.repeat
             Layout.fillWidth: true
 
             Repeater {
@@ -100,7 +100,7 @@ ItemDelegate {
             id: alarm_description
             placeholderText: qsTr("Enter description here")
             cursorVisible: true
-            visible: root.checked
+            visible: alarm_delegate.checked
             text: model.label
             onTextEdited: model.label = text
         }
@@ -109,8 +109,8 @@ ItemDelegate {
             text: qsTr("Delete")
             width: 40
             height: 40
-            visible: root.checked
-            onClicked: root.ListView.view.model.remove(root.ListView.view.currentIndex, 1)
+            visible: alarm_delegate.checked
+            onClicked: alarm_delegate.ListView.view.model.remove(alarm_delegate.ListView.view.currentIndex, 1)
         }
     }
 }

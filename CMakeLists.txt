@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Core Quick REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 
 # Telling CMake location of our .qrc file
 qt5_add_resources(APP_RESOURCES ${CMAKE_CURRENT_LIST_DIR}/src/qml/qml.qrc)
@@ -63,3 +64,6 @@ target_link_libraries(
         Qt5::Core
         Qt5::Quick
 )
+
+# plugins dir
+add_subdirectory(plugin)

@@ -1,5 +1,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+//#include <QApplication>
+
+
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +16,7 @@ int main(int argc, char *argv[])
     app.setApplicationName("Alarm");
 
     QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:/");
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
@@ -23,3 +27,14 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
+
+/*
+int main(int argc, char *argv[])
+{
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication app(argc, argv);
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    return app.exec();
+}
+*/

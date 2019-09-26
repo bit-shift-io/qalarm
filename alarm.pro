@@ -1,10 +1,14 @@
 TEMPLATE = app
 
 QT += quick
+QT += widgets
+SUBDIRS = src plugin/JsonSettings
 
-SOURCES += main.cpp
+SOURCES += src/main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += src/qml/qml.qrc
 
-target.path = $$[QT_INSTALL_EXAMPLES]/demos/alarms
+QML_IMPORT_PATH += $$PWD
+
+target.path = $$[QT_INSTALL_EXAMPLES]/build/alarm
 INSTALLS += target

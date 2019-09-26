@@ -4,19 +4,19 @@ import QtQuick.Layouts 1.11
 import QtQuick.Window 2.11
 
 Dialog {
-    id: alarmDialog
+    id: alarm_dialog
     title: "Add alarm"
     modal: true
     standardButtons: DialogButtonBox.Ok | DialogButtonBox.Cancel
 
-    property AlarmModel alarmModel
+    property AlarmModel alarm_model
 
-    function formatNumber(number) {
+    function format_number(number) {
         return number < 10 && number >= 0 ? "0" + number : number.toString()
     }
 
     onAccepted: {
-        alarmModel.append({
+        alarm_model.append({
             "hour": hoursTumbler.currentIndex,
             "minute": minutesTumbler.currentIndex,
             "day": dayTumbler.currentIndex + 1,
@@ -36,7 +36,7 @@ Dialog {
             ],
         })
     }
-    onRejected: alarmDialog.close()
+    onRejected: alarm_dialog.close()
 
     contentItem: RowLayout {
         RowLayout {
@@ -46,14 +46,14 @@ Dialog {
                 id: hoursTumbler
                 model: 24
                 delegate: TumblerDelegate {
-                    text: formatNumber(modelData)
+                    text: format_number(modelData)
                 }
             }
             Tumbler {
                 id: minutesTumbler
                 model: 60
                 delegate: TumblerDelegate {
-                    text: formatNumber(modelData)
+                    text: format_number(modelData)
                 }
             }
         }
@@ -86,7 +86,7 @@ Dialog {
                 Component.onCompleted: updateModel()
 
                 delegate: TumblerDelegate {
-                    text: formatNumber(modelData)
+                    text: format_number(modelData)
                 }
             }
             Tumbler {
@@ -110,7 +110,7 @@ Dialog {
 
                 model: years
                 delegate: TumblerDelegate {
-                    text: formatNumber(modelData)
+                    text: format_number(modelData)
                 }
             }
         }
