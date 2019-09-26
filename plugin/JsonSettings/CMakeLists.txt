@@ -7,7 +7,7 @@
 # 'myplugin' resource file. All files have 'plugin/' prefix
 
 set(PLUGIN_NAME 
-    JsonSettingsQML
+    JsonSettings
 )
 
 #qt5_add_resources(PLUGIN_RESOURCES ${CMAKE_CURRENT_LIST_DIR}/plugin.qrc)
