@@ -2,7 +2,8 @@ import QtQuick 2.11
 import Qt.labs.settings 1.0
 
 // plugins
-import JsonSettings 1.0 as Database
+//import JsonSettings 1.0 as Database
+import fileio 1.0
 
 // Populate the model with some sample data.
 ListModel {

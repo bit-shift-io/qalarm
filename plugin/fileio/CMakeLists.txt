@@ -1,13 +1,8 @@
-# This is 'myplugin' CMakeLists.txt file. 'myplugin' is application plugin.
-# It means that it was created specailly for 'app' project and probably
-# will be never used outside of it.
-# If you're goind to create reusable plugin make sure to build it as
-# separate project with proper install commands and CMake.config file.
+# https://stackoverflow.com/questions/51022680/building-qt-qml-plugin-using-cmake
 
-# 'myplugin' resource file. All files have 'plugin/' prefix
 
-set(PLUGIN_NAME 
-    JsonSettings
+set(PLUGIN_NAME
+    fileio
 )
 
 #qt5_add_resources(PLUGIN_RESOURCES ${CMAKE_CURRENT_LIST_DIR}/plugin.qrc)
@@ -17,14 +12,12 @@ add_library(
     SHARED
 
     # h files
-    ${CMAKE_CURRENT_LIST_DIR}/jsonglobalsettings.h
-    ${CMAKE_CURRENT_LIST_DIR}/jsonsettings_plugin.h
-    ${CMAKE_CURRENT_LIST_DIR}/jsonsettingsfile.h
+    ${CMAKE_CURRENT_LIST_DIR}/fileio_plugin.h
+    ${CMAKE_CURRENT_LIST_DIR}/fileio.h
 
     # cpp files
-    ${CMAKE_CURRENT_LIST_DIR}/jsonglobalsettings.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/jsonsettings_plugin.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/jsonsettingsfile.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/fileio_plugin.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/fileio.cpp
 
     # It's not important to include 'qmldir' or 'plugin.qmltypes' here,
     # but it will make IDEs (such as Qt Creator) to include them in project tree
@@ -59,7 +52,6 @@ target_link_libraries(
         Qt5::Quick
         Qt5::Qml
 )
-
 
 
 # set plugin output dir
