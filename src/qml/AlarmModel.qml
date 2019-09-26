@@ -1,9 +1,10 @@
 import QtQuick 2.11
 import Qt.labs.settings 1.0
+import "Storage.js" as Storage
 
 // plugins
 //import JsonSettings 1.0 as Database
-import fileio 1.0
+//import fileio 1.0
 
 // Populate the model with some sample data.
 ListModel {
@@ -31,6 +32,10 @@ ListModel {
         }
         add(alarm)
 
+        //console.log(Storage.read_text_files("Defaults.txt"))
+        //console.log(Storage.read_text_files("Defaults.txt"))
+        console.log("status:")
+        console.log(Storage.write_text_file("ab1234.txt", "Hellow"))
 
         if(count == 0) {
             //create database, insert default data

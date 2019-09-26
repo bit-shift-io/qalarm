@@ -17,6 +17,36 @@ var config = {
     db_timeout: 100,
 }
 
+// https://stackoverflow.com/questions/17882518/reading-and-writing-files-in-qml-qt
+function read_text_files(fileUrl) {
+    var request = new XMLHttpRequest();
+    request.open("GET", fileUrl, false);
+    request.send(null);
+    return request.responseText;
+}
+
+/*
+function read_text_files(fileUrl){
+    var xhr = new XMLHttpRequest;
+    xhr.open("GET", fileUrl); // set Method and File
+    xhr.onreadystatechange = function () {
+        if(xhr.readyState === XMLHttpRequest.DONE){ // if request_status == DONE
+            var response = xhr.responseText;
+
+            console.log(response);
+           // Your Code
+        }
+    }
+    xhr.send(); // begin the request
+}*/
+
+function write_text_file(fileUrl, text) {
+    var request = new XMLHttpRequest();
+    request.open("PUT", fileUrl, false);
+    request.send(text);
+    return request.status;
+}
+
 /*
 query = {
     create_table: 'CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);',
