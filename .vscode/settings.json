@@ -1,5 +1,15 @@
 {
     "files.associations": {
-        "qqmlapplicationengine": "cpp"
-    }
+        "qqmlapplicationengine": "cpp",
+        "*.ipp": "cpp",
+        "functional": "cpp"
+    },
+    // Hide the following
+    "files.exclude": {
+        "**/.*": true,
+        "**/*.o": true,
+        "**/*.a": true,
+        "**/*.po": true,
+    },
+    "workbench.editor.enablePreviewFromQuickOpen": false,    
 }

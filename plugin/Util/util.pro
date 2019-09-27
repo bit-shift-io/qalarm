@@ -1,32 +1,21 @@
 TEMPLATE = lib
-TARGET = JsonSettings
+TARGET = Util
 QT += qml quick
 CONFIG += qt plugin
 
 TARGET = $$qtLibraryTarget($$TARGET)
-uri = JsonSettings
-
-exists( ../include/project-paths.pri ) {
-  include(../include/project-paths.pri)
-}
-else:exists( ../../project-paths.pri ) {
-  include(../../project-paths.pri)
-} else:exists(../gui-session.pri) {
-  include(../gui-session.pri)
-}
+uri = bitshift
 
 # Input
 SOURCES += \
-    jsonglobalsettings.cpp \
-    jsonsettingsfile.cpp \
-    jsonsettings_plugin.cpp
+    util_plugin.cpp \
+    util.cpp
 
 HEADERS += \
-    jsonglobalsettings.h \
-    jsonsettingsfile.h \
-    jsonsettings_plugin.h
+    util_plugin.h \
+    util.h
 
-OTHER_FILES = qmldir
+DISTFILES = qmldir
 
 !equals(_PRO_FILE_PWD_, $$OUT_PWD) {
     copy_qmldir.target = $$OUT_PWD/qmldir

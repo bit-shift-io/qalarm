@@ -18,6 +18,7 @@
                 "isDefault": true
             },
             "presentation": {
+                "clear": true,   // clear terminal first
                 "echo": true,
                 "reveal": "always",
                 "focus": false,
@@ -38,6 +39,7 @@
                 "isDefault": true
             },
             "presentation": {
+                "clear": true,   // clear terminal first
                 "echo": true,
                 "reveal": "always",
                 "focus": false,

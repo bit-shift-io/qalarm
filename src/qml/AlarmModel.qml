@@ -1,58 +1,45 @@
 import QtQuick 2.11
-import Qt.labs.settings 1.0
-import "Storage.js" as Storage
-
-// plugins
-//import JsonSettings 1.0 as Database
-//import fileio 1.0
+import Qt.labs.platform 1.1 // for standard paths
+import Util 1.0
+import "." // for singletons qmldir
 
 // Populate the model with some sample data.
 ListModel {
     id: alarm_model
-    property string data: ""
+    property string database_file: "alarm.json"
 
-    // alarm model save/load
-    // serialize model
-    //Settings { id: settings; }
+   onDataChanged: {
+        console.log('Data Changed')
+    }
 
     Component.onCompleted: {
-        console.log("Loading app...");
+        console.log("load data");
 
-        // test data
-        var alarm = {
-            hour: 7,
-            minute: 0,
-            day: 2,
-            month: 8,
-            year: 2018,
-            activated: true,
-            label: "Work",
-            repeat: true,
-            repeat_list: [1,3,5],
+        // todo move to cpp
+        // get the app config location
+        var app_name = Qt.application.name;
+        var str = StandardPaths.standardLocations(StandardPaths.AppConfigLocation)[0];
+        str = str.replace("file://", "");
+        var n = str.lastIndexOf(app_name);
+        if (n >= 0 && n + app_name.length >= str.length) {
+            str = str.substring(0, n);
         }
-        add(alarm)
+        database_file = str + database_file;
 
-        //console.log(Storage.read_text_files("Defaults.txt"))
-        //console.log(Storage.read_text_files("Defaults.txt"))
-        console.log("status:")
-        console.log(Storage.write_text_file("ab1234.txt", "Hellow"))
 
-        if(count == 0) {
-            //create database, insert default data
-            console.log("First...");
-            Storage.init_database();
+        var database_exists = Util.file_exists(database_file);
+        //database_exists = false; // debug
 
+        var data_model = [];
+        if (database_exists) {
+            var data = Util.read_text_file(database_file);
+            data_model = JSON.parse(data)
         } else {
-            //if necessary do something else
-            console.log("Non-first...");
-            /*
-            AlarmModel.clear()
-            var data_model = JSON.parse(alarm_model_data)
-            for (var i = 0; i < data_model.length; ++i) {
-                AlarmModel.append(data_model[i])
-            }
-            */
+            data_model = Config.default_alarms
+        }
 
+        for (var i = 0; i < data_model.length; ++i) {
+            add_alarm(data_model[i])
         }
     }
 
@@ -64,15 +51,12 @@ ListModel {
         for (var i = 0; i < count; ++i) {
             temp_data.push(get(i))
         }
-        data = JSON.stringify(temp_data)
-
-        console.log(data)
+        // write file
+        Util.write_text_file(database_file, JSON.stringify(temp_data))
     }
 
 
-    onDataChanged: {
-        console.log('Data Changed')
-    }
+ 
 
     function get_alarm(index) {
         var item = get(index);
@@ -90,7 +74,7 @@ ListModel {
         return alarm;
     }
 
-    function add(params) {
+    function add_alarm(params) {
         // day of week 1-6 = mon - fri
         // 6 = sat
         // 0 = sun

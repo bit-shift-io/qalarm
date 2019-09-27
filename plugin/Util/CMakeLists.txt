@@ -1,13 +1,8 @@
-# This is 'myplugin' CMakeLists.txt file. 'myplugin' is application plugin.
-# It means that it was created specailly for 'app' project and probably
-# will be never used outside of it.
-# If you're goind to create reusable plugin make sure to build it as
-# separate project with proper install commands and CMake.config file.
+# https://stackoverflow.com/questions/51022680/building-qt-qml-plugin-using-cmake
 
-# 'myplugin' resource file. All files have 'plugin/' prefix
 
-set(PLUGIN_NAME 
-    JsonSettings
+set(PLUGIN_NAME
+    Util
 )
 
 #qt5_add_resources(PLUGIN_RESOURCES ${CMAKE_CURRENT_LIST_DIR}/plugin.qrc)
@@ -17,14 +12,11 @@ add_library(
     SHARED
 
     # h files
-    ${CMAKE_CURRENT_LIST_DIR}/jsonglobalsettings.h
-    ${CMAKE_CURRENT_LIST_DIR}/jsonsettings_plugin.h
-    ${CMAKE_CURRENT_LIST_DIR}/jsonsettingsfile.h
+    ${CMAKE_CURRENT_LIST_DIR}/util_plugin.h
+    ${CMAKE_CURRENT_LIST_DIR}/util.h
 
     # cpp files
-    ${CMAKE_CURRENT_LIST_DIR}/jsonglobalsettings.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/jsonsettings_plugin.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/jsonsettingsfile.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/util.cpp
 
     # It's not important to include 'qmldir' or 'plugin.qmltypes' here,
     # but it will make IDEs (such as Qt Creator) to include them in project tree
@@ -60,13 +52,12 @@ target_link_libraries(
         Qt5::Qml
 )
 
-
-
+# only need these if we want to move the build files
 # set plugin output dir
-set_target_properties(${PLUGIN_NAME} PROPERTIES
-    AUTOMOC TRUE
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/plugin/${PLUGIN_NAME}
-)
+#set_target_properties(${PLUGIN_NAME} PROPERTIES
+#    AUTOMOC TRUE
+#    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/plugin/${PLUGIN_NAME}
+#)
 
 # During plugin searching Qt will be looking for 'qmldir' file
 # So we should place it next to our plugin lib.
@@ -76,5 +67,5 @@ add_custom_command(
     COMMAND
         ${CMAKE_COMMAND} -E copy
         ${CMAKE_CURRENT_LIST_DIR}/qmldir
-        ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/plugin/${PLUGIN_NAME}/qmldir # $<TARGET_FILE_DIR:${PLUGIN_NAME}>/qmldir
+        ${CMAKE_BINARY_DIR}/$<CONFIG>/plugin/${PLUGIN_NAME}/qmldir # $<TARGET_FILE_DIR:${PLUGIN_NAME}>/qmldir
 )

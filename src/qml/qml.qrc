@@ -2,11 +2,21 @@
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
         <file>main.qml</file>
+        
         <file>TumblerDelegate.qml</file>
         <file>AlarmModel.qml</file>
         <file>AlarmDelegate.qml</file>
         <file>AlarmDialog.qml</file>
-        <file>Storage.js</file>
-        <file>Defaults.txt</file>
+
+
+        <file>qmldir</file>
+        
+        <file>Config.qml</file>
+
+        <file>Style.qml</file>
+        <file>Theme.qml</file>
+        <file>Theme1.qml</file>
+
+        
     </qresource>
 </RCC>
