@@ -37,3 +37,5 @@ DISTFILES += \
     src/qml/main.qml \
     src/qml/qmldir \
     src/qml/qtquickcontrols2.conf
+
+
