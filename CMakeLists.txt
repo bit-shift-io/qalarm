@@ -25,8 +25,11 @@ qt5_add_resources(APP_RESOURCES
 )
 
 
-set(SOURCES 
+set(SOURCES
     src/main.cpp
+)
+
+set(HEADERS
 )
 
 # for future use
@@ -35,6 +38,7 @@ if(ANDROID)
     add_library(
         ${PROJECT_NAME}
         ${SOURCES}
+        ${HEADERS}
         ${APP_RESOURCES}
     )
 else()
@@ -42,6 +46,7 @@ else()
     add_executable(
         ${PROJECT_NAME}
         ${SOURCES}
+        ${HEADERS}
         ${APP_RESOURCES}    # App resources file
     )
 endif()

@@ -14,6 +14,12 @@ ApplicationWindow {
     height: 500
     visible: true
 
+
+    Connections {
+        target: Qt.application
+        onStateChanged: window_state_change()
+    }
+
     Settings {
         // window settings
         category: "window"
@@ -56,10 +62,32 @@ ApplicationWindow {
         visible: true
         icon.source: "qrc:/res/bitshift.alarm.png"
 
+        menu: Menu {
+            MenuItem {
+                text: qsTr("Quit")
+                onTriggered: Qt.quit()
+            }
+        }
+
+        onMessageClicked: console.log("Message clicked")
+        Component.onCompleted: showMessage("Message title", "Something important came up. Click this to know more.")
+        
         onActivated: {
-            window.show()
-            window.raise()
-            window.requestActivate()
+            if (window.visible) {
+                window.hide()
+            } else {
+                window.show()
+                window.raise()
+                window.requestActivate()
+            }
+        }
+    }
+
+
+    function window_state_change()
+    {
+        if (Qt.application.state == 2) { // minimized
+            window.hide()
         }
     }
 }

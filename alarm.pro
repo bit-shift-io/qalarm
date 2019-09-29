@@ -5,8 +5,7 @@ SUBDIRS = src \
     plugin
 
 SOURCES += \
-    src/main.cpp \
-    plugin/Util/util.cpp
+    src/main.cpp
 
 RESOURCES += src/qml/qml.qrc \
     res/qml.qrc
@@ -16,10 +15,7 @@ QML_IMPORT_PATH += $$PWD
 target.path = $$[QT_INSTALL_EXAMPLES]/build/alarm
 INSTALLS += target
 
-HEADERS += \
-    plugin/Util/util.h \
-    plugin/Util/util_plugin.h \
-    src/util.h
+HEADERS += 
 
 DISTFILES += \
     plugin/CMakeLists.txt \

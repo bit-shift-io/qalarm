@@ -57,6 +57,8 @@ int main(int argc, char *argv[])
     engine.addImportPath("./lib");
     engine.addImportPath("./plugin");
 
+    // load main qml
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
     return app.exec();
 }
