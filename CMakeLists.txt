@@ -2,6 +2,28 @@ cmake_minimum_required(VERSION 3.1)
 
 project(qalarm VERSION 1.0 LANGUAGES CXX)
 
+# enable debug via cmd
+# cmake -DDEFINE_DEBUG=ON -DCMAKE_INSTALL_PREFIX=/usr ..
+option(DEFINE_DEBUG
+  "Build using debug"
+  OFF)
+
+if(DEFINE_DEBUG)
+  message("Adding Debug flag...")
+  add_definitions(-DDEBUG)
+  set(CMAKE_BUILD_TYPE Debug)
+  message("Build type is " ${CMAKE_BUILD_TYPE})
+endif(DEFINE_DEBUG)
+
+
+# debug, enable debugging
+# https://doc.qt.io/qt-5/qtquick-debugging.html#qml-debugging-infrastructure
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_definitions(
+    )
+    message(STATUS "debug enabled")
+endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
+
 # set output directories
 #set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 #set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)

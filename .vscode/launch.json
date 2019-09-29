@@ -7,7 +7,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/build/${workspaceFolderBasename}",
-            "args": [],
+            "args": [
+                "DDEFINE_DEBUG=ON"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build/",
             "environment": [],
