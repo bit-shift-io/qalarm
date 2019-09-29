@@ -9,7 +9,7 @@ set(PLUGIN_NAME
 
 add_library(
     ${PLUGIN_NAME}
-    SHARED
+    SHARED # STATIC - compiled into binary | SHARED - so file, external plugin
 
     # h files
     ${CMAKE_CURRENT_LIST_DIR}/util_plugin.h

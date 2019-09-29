@@ -49,11 +49,12 @@ ApplicationWindow {
         alarm_model: alarm_list_view.model
     }
 
-    /*
+
+    
     // system tray
     SystemTrayIcon {
         visible: true
-        //icon.source: "qrc:/images/tray-icon.png"
+        icon.source: "qrc:/res/bitshift.alarm.png"
 
         onActivated: {
             window.show()
@@ -61,5 +62,4 @@ ApplicationWindow {
             window.requestActivate()
         }
     }
-    */
 }

@@ -3,33 +3,29 @@ TARGET = Util
 QT += qml quick
 CONFIG += qt plugin
 
-TARGET = $$qtLibraryTarget($$TARGET)
-uri = bitshift
+#TARGET = $$qtLibraryTarget($$TARGET)
 
 # Input
 SOURCES += \
-    util_plugin.cpp \
     util.cpp
 
 HEADERS += \
     util_plugin.h \
     util.h
 
+OTHER_FILES += \
+    qmldir
+
 DISTFILES = qmldir
+DESTDIR = plugin/Util
+TARGET = Util
 
-!equals(_PRO_FILE_PWD_, $$OUT_PWD) {
-    copy_qmldir.target = $$OUT_PWD/qmldir
-    copy_qmldir.depends = $$_PRO_FILE_PWD_/qmldir
-    copy_qmldir.commands = $(COPY_FILE) \"$$replace(copy_qmldir.depends, /, $$QMAKE_DIR_SEP)\" \"$$replace(copy_qmldir.target, /, $$QMAKE_DIR_SEP)\"
-    QMAKE_EXTRA_TARGETS += copy_qmldir
-    PRE_TARGETDEPS += $$copy_qmldir.target
-}
+DESTPATH=$$PWD/plugin/Util
 
-qmldir.files = qmldir
-unix {
-    installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
-    qmldir.path = $$installPath
-    target.path = $$installPath
-    INSTALLS += target qmldir
-}
+target.path=$$DESTPATH
+qmldir.files=$$PWD/qmldir
+qmldir.path=$$DESTPATH
+INSTALLS += target qmldir
 
+# Copy the qmldir file to the same folder as the plugin binary
+QMAKE_POST_LINK += $$QMAKE_COPY $$replace($$list($$quote($$PWD/qmldir) $$DESTDIR), /, $$QMAKE_DIR_SEP)

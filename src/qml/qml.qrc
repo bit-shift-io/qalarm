@@ -16,7 +16,5 @@
         <file>Style.qml</file>
         <file>Theme.qml</file>
         <file>Theme1.qml</file>
-
-        
     </qresource>
 </RCC>

@@ -13,11 +13,16 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Core Quick REQUIRED)
-find_package(Qt5Widgets REQUIRED)
+# widgets for systray qapplication
+find_package(Qt5 COMPONENTS REQUIRED Core Quick Widgets QuickWidgets)
+#find_package(Qt5Widgets REQUIRED)
+
 
 # Telling CMake location of our .qrc file
-qt5_add_resources(APP_RESOURCES ${CMAKE_CURRENT_LIST_DIR}/src/qml/qml.qrc)
+qt5_add_resources(APP_RESOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/src/qml/qml.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/res/qml.qrc
+)
 
 
 set(SOURCES 
@@ -68,7 +73,9 @@ target_link_libraries(
     PRIVATE
         Qt5::Core
         Qt5::Quick
+        Qt5::Widgets
+        Qt5::QuickWidgets
 )
 
-# plugins dir
+# plugins dir (external to binary)
 add_subdirectory(plugin)

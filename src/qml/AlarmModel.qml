@@ -25,7 +25,7 @@ ListModel {
             str = str.substring(0, n);
         }
         database_file = str + database_file;
-
+        console.log(database_file);
 
         var database_exists = Util.file_exists(database_file);
         //database_exists = false; // debug
