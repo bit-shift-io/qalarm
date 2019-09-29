@@ -70,6 +70,7 @@ ListModel {
             label: item.label,
             repeat: item.repeat,
             repeat_list: item.repeat_list,
+            
         }
         return alarm;
     }

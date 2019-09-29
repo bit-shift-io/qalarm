@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.11
 import QtQuick.Window 2.11
 
 ItemDelegate {
+    property variant days_of_week : [1,2,3,4,5,6,0] // fixed
+
     id: alarm_delegate
     width: parent.width
     checkable: true
@@ -81,18 +83,68 @@ ItemDelegate {
             visible: alarm_delegate.checked && model.repeat
             Layout.fillWidth: true
 
-            Repeater {
-                id: day_repeater
-                model: repeat_list
-                delegate: RoundButton {
-                    text: Qt.locale().dayName(model.day_of_week, Locale.NarrowFormat)
-                    font.capitalization: Font.Capitalize
-                    flat: true
-                    checked: model.repeat
-                    checkable: true
-                    Material.background: checked ? Material.accent : "transparent"
-                    onToggled: model.repeat = checked
-                }
+            RoundButton {
+                id: monday
+                text: Qt.locale().dayName(days_of_week[0], Locale.NarrowFormat)
+                font.capitalization: Font.Capitalize
+                checkable: true
+                checked: is_checked(0)
+                Material.background: checked ? Material.accent : "transparent"
+                onToggled: model.repeat = checked
+            }
+            RoundButton {
+                id: tuesday
+                text: Qt.locale().dayName(days_of_week[1], Locale.NarrowFormat)
+                font.capitalization: Font.Capitalize
+                checkable: true
+                checked: is_checked(1)
+                Material.background: checked ? Material.accent : "transparent"
+                onToggled: model.repeat = checked
+            }
+            RoundButton {
+                id: wednesday
+                text: Qt.locale().dayName(days_of_week[2], Locale.NarrowFormat)
+                font.capitalization: Font.Capitalize
+                checkable: true
+                checked: is_checked(2)
+                Material.background: checked ? Material.accent : "transparent"
+                onToggled: model.repeat = checked
+            }
+            RoundButton {
+                id: thursday
+                text: Qt.locale().dayName(days_of_week[3], Locale.NarrowFormat)
+                font.capitalization: Font.Capitalize
+                checkable: true
+                checked: is_checked(3)
+                Material.background: checked ? Material.accent : "transparent"
+                onToggled: model.repeat = checked
+            }
+            RoundButton {
+                id: friday
+                text: Qt.locale().dayName(days_of_week[4], Locale.NarrowFormat)
+                font.capitalization: Font.Capitalize
+                checkable: true
+                checked: is_checked(4)
+                Material.background: checked ? Material.accent : "transparent"
+                onToggled: model.repeat = checked
+            }
+            RoundButton {
+                id: saturday
+                text: Qt.locale().dayName(days_of_week[5], Locale.NarrowFormat)
+                font.capitalization: Font.Capitalize
+                checkable: true
+                checked: is_checked(5)
+                Material.background: checked ? Material.accent : "transparent"
+                onToggled: model.repeat = checked
+            }
+            RoundButton {
+                id: sunday
+                text: Qt.locale().dayName(days_of_week[6], Locale.NarrowFormat)
+                font.capitalization: Font.Capitalize
+                checkable: true
+                checked: is_checked(6)
+                Material.background: checked ? Material.accent : "transparent"
+                onToggled: model.repeat = checked
             }
         }
 
@@ -112,5 +164,13 @@ ItemDelegate {
             visible: alarm_delegate.checked
             onClicked: alarm_delegate.ListView.view.model.remove(alarm_delegate.ListView.view.currentIndex, 1)
         }
+    }
+
+    function is_checked(p) {
+        for (let i = 0; i < model.repeat_list.count; ++i) {
+            if (model.repeat_list[i] == p)
+                return true;
+        }
+        return false;
     }
 }

@@ -9,6 +9,7 @@ import Qt.labs.platform 1.1 // sys tray
 
 
 ApplicationWindow {
+    
     id: window
     width: 350
     height: 500
@@ -29,19 +30,25 @@ ApplicationWindow {
         property alias height: window.height
     }
 
-    // alarm list
-    ListView {
-        id: alarm_list_view
+    ScrollView {
+        id: scroll_view
         anchors.fill: parent
-        model: AlarmModel {}
-        delegate: AlarmDelegate {}
+
+        // alarm list
+        ListView {
+            id: alarm_list_view
+            anchors.fill: parent
+            model: AlarmModel {}
+            delegate: AlarmDelegate {}
+        }
+
     }
 
     // add alarm button
     RoundButton {
         id: addAlarmButton
         text: "+"
-        anchors.bottom: alarm_list_view.bottom
+        anchors.bottom: scroll_view.bottom
         anchors.bottomMargin: 8
         anchors.horizontalCenter: parent.horizontalCenter
         onClicked: alarm_dialog.open()
