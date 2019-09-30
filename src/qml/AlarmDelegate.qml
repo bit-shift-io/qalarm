@@ -36,9 +36,9 @@ ItemDelegate {
                         function get_string(){
                             var str = "";
                             for (let i = 0; i < model.repeat_list.count; ++i) {
-                                let day = model.repeat_list.get(i);
-                                if (day.repeat) {
-                                    str += Qt.locale().dayName(day.day_of_week, Locale.NarrowFormat) + " ";
+                                let item = model.repeat_list.get(i);
+                                if (item.on == true) {
+                                    str += Qt.locale().dayName(days_of_week[item.day], Locale.NarrowFormat) + " ";
                                 }
                             }
                             
@@ -85,66 +85,73 @@ ItemDelegate {
 
             RoundButton {
                 id: monday
-                text: Qt.locale().dayName(days_of_week[0], Locale.NarrowFormat)
+                property int day: 0
+                text: Qt.locale().dayName(days_of_week[day], Locale.NarrowFormat)
                 font.capitalization: Font.Capitalize
                 checkable: true
-                checked: is_checked(0)
+                checked: is_day_checked(day)
                 Material.background: checked ? Material.accent : "transparent"
-                onToggled: model.repeat = checked
+                onToggled: set_day_checked(day, checked)
             }
             RoundButton {
                 id: tuesday
-                text: Qt.locale().dayName(days_of_week[1], Locale.NarrowFormat)
+                property int day: 1
+                text: Qt.locale().dayName(days_of_week[day], Locale.NarrowFormat)
                 font.capitalization: Font.Capitalize
                 checkable: true
-                checked: is_checked(1)
+                checked: is_day_checked(day)
                 Material.background: checked ? Material.accent : "transparent"
-                onToggled: model.repeat = checked
+                onToggled: set_day_checked(day, checked)
             }
             RoundButton {
                 id: wednesday
-                text: Qt.locale().dayName(days_of_week[2], Locale.NarrowFormat)
+                property int day: 2
+                text: Qt.locale().dayName(days_of_week[day], Locale.NarrowFormat)
                 font.capitalization: Font.Capitalize
                 checkable: true
-                checked: is_checked(2)
+                checked: is_day_checked(day)
                 Material.background: checked ? Material.accent : "transparent"
-                onToggled: model.repeat = checked
+                onToggled: set_day_checked(day, checked)
             }
             RoundButton {
                 id: thursday
-                text: Qt.locale().dayName(days_of_week[3], Locale.NarrowFormat)
+                property int day: 3
+                text: Qt.locale().dayName(days_of_week[day], Locale.NarrowFormat)
                 font.capitalization: Font.Capitalize
                 checkable: true
-                checked: is_checked(3)
+                checked: is_day_checked(day)
                 Material.background: checked ? Material.accent : "transparent"
-                onToggled: model.repeat = checked
+                onToggled: set_day_checked(day, checked)
             }
             RoundButton {
                 id: friday
-                text: Qt.locale().dayName(days_of_week[4], Locale.NarrowFormat)
+                property int day: 4
+                text: Qt.locale().dayName(days_of_week[day], Locale.NarrowFormat)
                 font.capitalization: Font.Capitalize
                 checkable: true
-                checked: is_checked(4)
+                checked: is_day_checked(day)
                 Material.background: checked ? Material.accent : "transparent"
-                onToggled: model.repeat = checked
+                onToggled: set_day_checked(day, checked)
             }
             RoundButton {
                 id: saturday
-                text: Qt.locale().dayName(days_of_week[5], Locale.NarrowFormat)
+                property int day: 5
+                text: Qt.locale().dayName(days_of_week[day], Locale.NarrowFormat)
                 font.capitalization: Font.Capitalize
                 checkable: true
-                checked: is_checked(5)
+                checked: is_day_checked(day)
                 Material.background: checked ? Material.accent : "transparent"
-                onToggled: model.repeat = checked
+                onToggled: set_day_checked(day, checked)
             }
             RoundButton {
                 id: sunday
-                text: Qt.locale().dayName(days_of_week[6], Locale.NarrowFormat)
+                property int day: 6
+                text: Qt.locale().dayName(days_of_week[day], Locale.NarrowFormat)
                 font.capitalization: Font.Capitalize
                 checkable: true
-                checked: is_checked(6)
+                checked: is_day_checked(day)
                 Material.background: checked ? Material.accent : "transparent"
-                onToggled: model.repeat = checked
+                onToggled: set_day_checked(day, checked)
             }
         }
 
@@ -166,11 +173,13 @@ ItemDelegate {
         }
     }
 
-    function is_checked(p) {
-        for (let i = 0; i < model.repeat_list.count; ++i) {
-            if (model.repeat_list[i] == p)
-                return true;
-        }
+    function set_day_checked(p, checked) {
+
+    }
+
+    function is_day_checked(p) {
+        if (model.repeat_list.get(p).on == true)
+            return true;
         return false;
     }
 }

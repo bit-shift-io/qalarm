@@ -14,7 +14,15 @@ QtObject {
             activated: true,
             label: "Work",
             repeat: true,
-            repeat_list: [1,3,5],
+            repeat_list: [
+                {"day": 0, "on": true},
+                {"day": 1, "on": true},
+                {"day": 2, "on": true},
+                {"day": 3, "on": true},
+                {"day": 4, "on": true},
+                {"day": 5, "on": false}, // sat
+                {"day": 6, "on": false}, // sun
+            ]        
         },
         {
             hour: 9,
@@ -25,7 +33,15 @@ QtObject {
             activated: true,
             label: "Play",
             repeat: true,
-            repeat_list: [0, 6],
+            repeat_list: [
+                {"day": 0, "on": false},
+                {"day": 1, "on": false},
+                {"day": 2, "on": false},
+                {"day": 3, "on": false},
+                {"day": 4, "on": false},
+                {"day": 5, "on": true}, // sat
+                {"day": 6, "on": true}, // sun
+            ]
         },
         {
             hour: 14,
@@ -36,7 +52,15 @@ QtObject {
             activated: true,
             label: "Reminder",
             repeat: false,
-            repeat_list: [],
+            repeat_list: [
+                {"day": 0, "on": false},
+                {"day": 1, "on": false},
+                {"day": 2, "on": false},
+                {"day": 3, "on": false},
+                {"day": 4, "on": false},
+                {"day": 5, "on": false}, // sat
+                {"day": 6, "on": false}, // sun
+            ]
         },
     ]
 }

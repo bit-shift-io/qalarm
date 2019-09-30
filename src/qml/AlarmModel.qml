@@ -9,10 +9,18 @@ ListModel {
     property string database_file: "alarm.json"
 
    onDataChanged: {
-        console.log('Data Changed')
+        save_data();
     }
 
     Component.onCompleted: {
+        load_data();
+    }
+
+    Component.onDestruction: {
+        save_data();
+    }
+
+    function load_data() {
         console.log("load data");
 
         // todo move to cpp
@@ -27,8 +35,10 @@ ListModel {
         database_file = str + database_file;
         console.log(database_file);
 
+        // database, or config
         var database_exists = Util.file_exists(database_file);
-        //database_exists = false; // debug
+        // debug
+        //database_exists = false; 
 
         var data_model = [];
         if (database_exists) {
@@ -39,25 +49,23 @@ ListModel {
         }
 
         for (var i = 0; i < data_model.length; ++i) {
-            add_alarm(data_model[i])
+            add_alarm(data_model[i], false) // dont want to save while loading
         }
     }
 
-    Component.onDestruction: {
+    function save_data() {
+        console.log("save data");
+        var temp_data = [];
         // loop over children
-        // get each child as json
-        // stringify json
-        var temp_data = []
         for (var i = 0; i < count; ++i) {
-            temp_data.push(get(i))
+            var child = get_alarm(i);
+            temp_data.push(child)
         }
         // write file
         Util.write_text_file(database_file, JSON.stringify(temp_data))
     }
 
-
  
-
     function get_alarm(index) {
         var item = get(index);
         var alarm = {
@@ -69,13 +77,20 @@ ListModel {
             activated: item.activated,
             label: item.label,
             repeat: item.repeat,
-            repeat_list: item.repeat_list,
-            
+            repeat_list: [],
+        }
+        // extract repeat list as json
+        for (let i = 0; i < item.repeat_list.count; ++i) {
+            let element = item.repeat_list.get(i);
+            alarm.repeat_list.push({
+                "day": element.day,
+                "on": element.on,
+            })
         }
         return alarm;
     }
 
-    function add_alarm(params) {
+    function add_alarm(params, update=true) {
         // day of week 1-6 = mon - fri
         // 6 = sat
         // 0 = sun
@@ -91,67 +106,11 @@ ListModel {
             "repeat": params.repeat,
             "repeat_list": params.repeat_list,
         })
+
+        // save data
+        if (update) {
+            save_data()
+        }
     }
 
-    /*
-    ListElement {
-        hour: 7
-        minute: 0
-        day: 2
-        month: 8
-        year: 2018
-        activated: true
-        label: "Work"
-        repeat: true
-        repeat_list: [
-            ListElement { day_of_week: 1; repeat: true },
-            ListElement { day_of_week: 2; repeat: true },
-            ListElement { day_of_week: 3; repeat: true },
-            ListElement { day_of_week: 4; repeat: true },
-            ListElement { day_of_week: 5; repeat: false },
-            ListElement { day_of_week: 6; repeat: false },
-            ListElement { day_of_week: 0; repeat: true }
-        ]
-    }
-
-    ListElement {
-        hour: 9
-        minute: 0
-        day: 3
-        month: 8
-        year: 2018
-        activated: true
-        label: "Work"
-        repeat: true
-        repeat_list: [
-            ListElement { day_of_week: 1; repeat: false },
-            ListElement { day_of_week: 2; repeat: true },
-            ListElement { day_of_week: 3; repeat: false },
-            ListElement { day_of_week: 4; repeat: true },
-            ListElement { day_of_week: 5; repeat: false },
-            ListElement { day_of_week: 6; repeat: false },
-            ListElement { day_of_week: 0; repeat: true }
-        ]
-    }
-
-    ListElement {
-        hour: 5
-        minute: 15
-        day: 1
-        month: 9
-        year: 2018
-        activated: true
-        label: "Tomorrow"
-        repeat: false
-        repeat_list: [
-            ListElement { day_of_week: 1; repeat: false },
-            ListElement { day_of_week: 2; repeat: false },
-            ListElement { day_of_week: 3; repeat: false },
-            ListElement { day_of_week: 4; repeat: false },
-            ListElement { day_of_week: 5; repeat: false },
-            ListElement { day_of_week: 6; repeat: false },
-            ListElement { day_of_week: 0; repeat: true }
-        ]
-    }
-    */
 }

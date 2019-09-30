@@ -16,7 +16,7 @@ Dialog {
     }
 
     onAccepted: {
-        alarm_model.append({
+        alarm_model.add_alarm({
             "hour": hoursTumbler.currentIndex,
             "minute": minutesTumbler.currentIndex,
             "day": dayTumbler.currentIndex + 1,

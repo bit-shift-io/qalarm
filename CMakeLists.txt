@@ -19,8 +19,7 @@ endif(DEFINE_DEBUG)
 # debug, enable debugging
 # https://doc.qt.io/qt-5/qtquick-debugging.html#qml-debugging-infrastructure
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_definitions(
-    )
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DQT_QML_DEBUG ")
     message(STATUS "debug enabled")
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 

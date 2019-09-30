@@ -69,6 +69,7 @@ ApplicationWindow {
         visible: true
         icon.source: "qrc:/res/bitshift.alarm.png"
 
+        /*
         menu: Menu {
             MenuItem {
                 text: qsTr("Quit")
@@ -78,6 +79,7 @@ ApplicationWindow {
 
         onMessageClicked: console.log("Message clicked")
         Component.onCompleted: showMessage("Message title", "Something important came up. Click this to know more.")
+        */
         
         onActivated: {
             if (window.visible) {
