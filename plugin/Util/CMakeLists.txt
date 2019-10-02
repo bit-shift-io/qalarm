@@ -12,7 +12,7 @@ add_library(
     SHARED # STATIC - compiled into binary | SHARED - so file, external plugin
 
     # h files
-    ${CMAKE_CURRENT_LIST_DIR}/util_plugin.h
+    ${CMAKE_CURRENT_LIST_DIR}/plugin.h
     ${CMAKE_CURRENT_LIST_DIR}/util.h
 
     # cpp files
