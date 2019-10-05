@@ -9,7 +9,7 @@
 #include <QQuickWidget>
 #include <QSystemTrayIcon>
 #include <QQmlContext>
-
+#include <QDirIterator>
 
 /*
 int main(int argc, char *argv[])
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("bitshift");
     app.setApplicationName("Alarm");
 
-    app.setWindowIcon(QIcon("qrc:/res/bitshift.alarm.png"));
+    app.setWindowIcon(QIcon("qrc:/bitshift.alarm.png"));
 
     // add imports
     engine.addImportPath(".");
@@ -59,6 +59,13 @@ int main(int argc, char *argv[])
 
     // load main qml
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
+    // debug, print qrc resources
+    /*
+    QDirIterator it(":/", QDirIterator::Subdirectories);
+    while (it.hasNext()) {
+        qDebug() << it.next();
+    }*/
 
     return app.exec();
 }

@@ -30,20 +30,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/$<CONFIG>) # /bin
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTORCC ON) # for compiling qrc file to rcc
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # widgets for systray qapplication
 find_package(Qt5 COMPONENTS REQUIRED Core Quick Widgets QuickWidgets)
-#find_package(Qt5Widgets REQUIRED)
-
-
-# Telling CMake location of our .qrc file
-qt5_add_resources(APP_RESOURCES
-    ${CMAKE_CURRENT_LIST_DIR}/src/qml/qml.qrc
-    ${CMAKE_CURRENT_LIST_DIR}/res/qml.qrc
-)
 
 
 set(SOURCES
@@ -53,6 +45,12 @@ set(SOURCES
 set(HEADERS
 )
 
+set(RESOURCES
+    src/qml/qml.qrc
+    res/qml.qrc
+)
+
+
 # for future use
 if(ANDROID)
     # as library
@@ -60,7 +58,7 @@ if(ANDROID)
         ${PROJECT_NAME}
         ${SOURCES}
         ${HEADERS}
-        ${APP_RESOURCES}
+        ${RESOURCES}
     )
 else()
     # as executable
@@ -68,7 +66,7 @@ else()
         ${PROJECT_NAME}
         ${SOURCES}
         ${HEADERS}
-        ${APP_RESOURCES}    # App resources file
+        ${RESOURCES}    # App resources file
     )
 endif()
 

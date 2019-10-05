@@ -10,6 +10,7 @@ import TimeService 1.0
 import QtMultimedia 5.13
 
 
+
 ApplicationWindow {
     
     id: window
@@ -19,7 +20,7 @@ ApplicationWindow {
 
     Audio {
         id: audio_alarm
-        source: "alarm_analog_watch.ogg"
+        source: "qrc:/alarm_analog_watch.ogg"
     }
 
     TimeService {
@@ -100,7 +101,7 @@ ApplicationWindow {
     SystemTrayIcon {
         id: system_tray
         visible: true
-        icon.source: "qrc:/res/bitshift.alarm.png"
+        icon.source: "qrc:/bitshift.alarm.png"
 
         /*
         menu: Menu {
