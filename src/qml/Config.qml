@@ -8,10 +8,7 @@ QtObject {
         {
             hour: 7,
             minute: 0,
-            day: 2,
-            month: 8,
-            year: 2018,
-            activated: true,
+            active: true,
             label: "Work",
             repeat: true,
             repeat_list: [
@@ -27,10 +24,7 @@ QtObject {
         {
             hour: 9,
             minute: 0,
-            day: 2,
-            month: 8,
-            year: 2018,
-            activated: true,
+            active: true,
             label: "Play",
             repeat: true,
             repeat_list: [
@@ -46,10 +40,7 @@ QtObject {
         {
             hour: 14,
             minute: 0,
-            day: 2,
-            month: 8,
-            year: 2018,
-            activated: true,
+            active: true,
             label: "Reminder",
             repeat: false,
             repeat_list: [

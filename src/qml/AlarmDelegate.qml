@@ -17,23 +17,37 @@ ItemDelegate {
         // alarm overview
         RowLayout {
             ColumnLayout {
-                id: dateColumn
+                id: date_column
 
-                readonly property date alarmDate: new Date(
-                    model.year, model.month - 1, model.day, model.hour, model.minute)
-                
-                // time label
-                Label {
-                    id: time_label
-                    font.pixelSize: Qt.application.font.pixelSize * 2
-                    text: dateColumn.alarmDate.toLocaleTimeString(window.locale, Locale.ShortFormat)
-                    //Layout.fillWidth: true
-                    // invisible button
+                RowLayout {
+                    // time label
+                    Label {
+                        id: time_label
+                        font.pixelSize: Qt.application.font.pixelSize * 2
+                        text: alarm_model.get_display_time(model.hour, model.minute)
+                    }
+
+                    // am pm label
+                    Label {
+                        id: am_pm_label
+                        font.pixelSize: Qt.application.font.pixelSize * 1.4
+                        text: alarm_model.get_am_pm(model.hour)
+                        anchors.baseline: time_label.baseline;
+                    }
+
+              
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: alarm_dialog.open() // from main.qml // TODO: modify dialog
+                        //Layout.fillWidth: true
+                        //Layout.fillHeight: true
+                        onClicked: {
+                            alarm_dialog.open() // from main.qml
+                            alarm_dialog.set_alarm_index(index)
+                        }
                     }
                 }
+ 
+
                 RowLayout {
                     // repeat label
                     Label {
@@ -67,9 +81,9 @@ ItemDelegate {
                 Layout.fillWidth: true
             }
             Switch {
-                checked: model.activated
+                checked: model.active
                 Layout.alignment: Qt.AlignTop
-                onClicked: model.activated = checked
+                onClicked: model.active = checked
             }
         }
 
@@ -178,6 +192,21 @@ ItemDelegate {
             visible: alarm_delegate.checked
             onClicked: alarm_delegate.ListView.view.model.remove(alarm_delegate.ListView.view.currentIndex, 1)
         }
+
+        // bottom divider
+        MenuSeparator {
+            padding: 0
+            topPadding: 15
+            bottomPadding: 8
+            width: parent.width
+            contentItem: Rectangle {
+                implicitHeight: 2
+                //implicitWidth: 20
+                width: parent.width
+                opacity: 0.2
+            }
+        }
+
     }
 
     function set_day_checked(p, checked) {

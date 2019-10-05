@@ -20,6 +20,26 @@ ListModel {
         save_data();
     }
 
+    function format_number(number) {
+        return number < 10 && number >= 0 ? "0" + number : number.toString()
+    }
+
+
+    function get_display_time(hour, minute) {
+        if (hour > 12){
+            hour -= 12
+        }
+        return hour + ":" + format_number(minute)
+    }
+
+    function get_am_pm(hour) {
+        var am_pm = "AM"
+        if (hour > 12){
+            am_pm = "PM"
+        }
+        return am_pm
+    }
+
     function load_data() {
         console.log("load data");
 
@@ -87,10 +107,7 @@ ListModel {
         var alarm = {
             hour: item.hour,
             minute: item.minute,
-            day: item.day,
-            month: item.month,
-            year: item.year,
-            activated: item.activated,
+            active: item.active,
             label: item.label,
             repeat: item.repeat,
             repeat_list: [],
@@ -106,6 +123,22 @@ ListModel {
         return alarm;
     }
 
+    function set_alarm(index, params, update=true){
+        // modifys an existing alarm
+        var alarm = get(index)
+        alarm.hour = params.hour
+        alarm.minute = params.minute
+        alarm.active = params.active
+        alarm.label = params.label
+        alarm.repeat = params.repeat
+        alarm.repeat_list = params.repeat_list
+
+        // save data
+        if (update) {
+            save_data()
+        }
+    }
+
     function add_alarm(params, update=true) {
         // day of week 1-6 = mon - fri
         // 6 = sat
@@ -114,10 +147,7 @@ ListModel {
         append({
             "hour": params.hour,
             "minute": params.minute,
-            "day": params.day,
-            "month": params.month,
-            "year": params.year,
-            "activated": params.activated,
+            "active": params.active,
             "label": params.label,
             "repeat": params.repeat,
             "repeat_list": params.repeat_list,

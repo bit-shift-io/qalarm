@@ -67,7 +67,11 @@ ApplicationWindow {
             id: alarm_list_view
             anchors.fill: parent
             model: AlarmModel {}
-            delegate: AlarmDelegate {}
+            delegate: AlarmDelegate {
+                // pass the alarm model into the delegate
+                // so all our util functions are in the model
+                property variant alarm_model: alarm_list_view.model
+            }
         }
 
     }
@@ -104,11 +108,9 @@ ApplicationWindow {
                 text: qsTr("Quit")
                 onTriggered: Qt.quit()
             }
-        }
+        }*/
 
         onMessageClicked: console.log("Message clicked")
-        Component.onCompleted: showMessage("Message title", "Something important came up. Click this to know more.")
-        */
         
         onActivated: {
             if (window.visible) {

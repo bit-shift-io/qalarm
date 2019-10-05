@@ -5,24 +5,31 @@ import QtQuick.Window 2.11
 
 Dialog {
     id: alarm_dialog
-    title: "Add alarm"
+    //title: "Add alarm"
     modal: true
     standardButtons: DialogButtonBox.Ok | DialogButtonBox.Cancel
 
     property AlarmModel alarm_model
+    property int alarm_index: -1
 
-    function format_number(number) {
-        return number < 10 && number >= 0 ? "0" + number : number.toString()
+    function set_alarm_index(index) {
+        alarm_index = index
+        var alarm = alarm_model.get_alarm(index)
+        hour_tumbler.currentIndex = alarm.hour - 1
+        minute_tumbler.currentIndex = alarm.minute
     }
 
     onAccepted: {
-        alarm_model.add_alarm({
-            "hour": hoursTumbler.currentIndex,
-            "minute": minutesTumbler.currentIndex,
-            "day": dayTumbler.currentIndex + 1,
-            "month": monthTumbler.currentIndex + 1,
-            "year": yearTumbler.years[yearTumbler.currentIndex],
-            "activated": true,
+        // get am/pm and adjust hours to suit
+        var hours = hour_tumbler.currentIndex + 1
+        if (am_pm_tumbler.state == "PM") {
+            hours += 12
+        }
+        
+        var params = {
+            "hour": hours,
+            "minute": minute_tumbler.currentIndex,
+            "active": true,
             "label": "",
             "repeat": false,
             "repeat_list": [
@@ -34,87 +41,119 @@ Dialog {
                 { "day_of_week": 6, "repeat": false }, // sat
                 { "day_of_week": 0, "repeat": false }, // sun
             ],
-        })
+        }
+
+        if (alarm_index == -1) {
+            // new alarm
+            alarm_model.add_alarm(params)
+        } else {
+            // modify alarm
+            alarm_model.set_alarm(alarm_index, params)
+        }
     }
+
     onRejected: alarm_dialog.close()
 
-    contentItem: RowLayout {
-        RowLayout {
-            id: rowTumbler
+    onOpened: {
+        update_time_label()
+    }
 
-            Tumbler {
-                id: hoursTumbler
-                model: 24
-                delegate: TumblerDelegate {
-                    text: format_number(modelData)
-                }
-            }
-            Tumbler {
-                id: minutesTumbler
-                model: 60
-                delegate: TumblerDelegate {
-                    text: format_number(modelData)
-                }
+    function update_time_label() {
+        time_label.text = alarm_model.get_display_time(hour_tumbler.currentIndex + 1, minute_tumbler.currentIndex) + am_pm_tumbler.state
+    }
+
+    contentItem: ColumnLayout {
+        // time label
+        RowLayout {
+            id: time_layout
+            Layout.fillWidth: true
+
+            Label {
+                id: time_label
+                font.pixelSize: Qt.application.font.pixelSize * 2
+                text: "12:00PM"
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
             }
         }
 
-        /*
+        // tumblers
         RowLayout {
-            id: datePicker
+            id: row_tumbler
 
-            Layout.leftMargin: 20
-
-            property alias dayTumbler: dayTumbler
-            property alias monthTumbler: monthTumbler
-            property alias yearTumbler: yearTumbler
-
-            readonly property var days: [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
+            // hour
             Tumbler {
-                id: dayTumbler
-
-                function updateModel() {
-                    // Populate the model with days of the month. For example: [0, ..., 30]
-                    var previousIndex = dayTumbler.currentIndex
-                    var array = []
-                    var newDays = datePicker.days[monthTumbler.currentIndex]
-                    for (var i = 1; i <= newDays; ++i)
-                        array.push(i)
-                    dayTumbler.model = array
-                    dayTumbler.currentIndex = Math.min(newDays - 1, previousIndex)
-                }
-
-                Component.onCompleted: updateModel()
-
-                delegate: TumblerDelegate {
-                    text: format_number(modelData)
-                }
-            }
-            Tumbler {
-                id: monthTumbler
-
-                onCurrentIndexChanged: dayTumbler.updateModel()
-
+                id: hour_tumbler
                 model: 12
                 delegate: TumblerDelegate {
-                    text: window.locale.standaloneMonthName(modelData, Locale.ShortFormat)
+                    font.pixelSize: Qt.application.font.pixelSize * 1.4
+                    text: alarm_model.format_number(modelData + 1)
                 }
+                onCurrentIndexChanged:{update_time_label()}
             }
+
+            // minute
             Tumbler {
-                id: yearTumbler
-
-                // This array is populated with the next three years. For example: [2018, 2019, 2020]
-                readonly property var years: (function() {
-                    var currentYear = new Date().getFullYear()
-                    return [0, 1, 2].map(function(value) { return value + currentYear; })
-                })()
-
-                model: years
+                id: minute_tumbler
+                model: 60
                 delegate: TumblerDelegate {
-                    text: format_number(modelData)
+                    font.pixelSize: Qt.application.font.pixelSize * 1.4
+                    text: alarm_model.format_number(modelData)
+                }
+                onCurrentIndexChanged:{update_time_label()}
+            }
+
+            // am/pm tumbler/state
+            ColumnLayout {
+                id: am_pm_tumbler
+                state: "AM"
+                onStateChanged:{update_time_label()}
+                states: [
+                    State {
+                        name: "AM"
+                        PropertyChanges { 
+                            target: am
+                            opacity: 1.0
+                        }
+                        PropertyChanges { 
+                            target: pm
+                            opacity: 0.5
+                        }
+                    },
+                    State {
+                        name: "PM"
+                        PropertyChanges { 
+                            target: am
+                            opacity: 0.5
+                        }
+                        PropertyChanges { 
+                            target: pm
+                            opacity: 1.0
+                        }
+                    }
+                ]
+                Label {
+                    id: am
+                    text: "AM"
+                    font.pixelSize: Qt.application.font.pixelSize * 1.4
+                    padding: 6
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: am_pm_tumbler.state = "AM"
+                    }
+                }
+                Label {
+                    id: pm
+                    text: "PM"
+                    font.pixelSize: Qt.application.font.pixelSize * 1.4
+                    padding: 6
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: am_pm_tumbler.state = "PM"
+                    }
                 }
             }
         }
-        */
+
     }
 }
