@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/res">
         <file>bitshift.alarm.png</file>
+        <file>alarm_analog_watch.ogg</file>
     </qresource>
 </RCC>

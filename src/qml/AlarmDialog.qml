@@ -58,6 +58,7 @@ Dialog {
             }
         }
 
+        /*
         RowLayout {
             id: datePicker
 
@@ -114,5 +115,6 @@ Dialog {
                 }
             }
         }
+        */
     }
 }

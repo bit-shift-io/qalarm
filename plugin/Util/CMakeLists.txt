@@ -54,10 +54,10 @@ target_link_libraries(
 
 # only need these if we want to move the build files
 # set plugin output dir
-#set_target_properties(${PLUGIN_NAME} PROPERTIES
-#    AUTOMOC TRUE
-#    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/plugin/${PLUGIN_NAME}
-#)
+set_target_properties(${PLUGIN_NAME} PROPERTIES
+    AUTOMOC TRUE
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/$<CONFIG>/plugin/${PLUGIN_NAME}
+)
 
 # During plugin searching Qt will be looking for 'qmldir' file
 # So we should place it next to our plugin lib.

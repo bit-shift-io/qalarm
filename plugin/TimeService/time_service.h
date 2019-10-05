@@ -1,9 +1,10 @@
 /*
-
 https://evileg.com/en/post/263/
 
 https://github.com/amirkogit/QtTestGround/blob/master/learn_qml/QmlCppIntegration/Take4/singletontypeexample.h
 
+// see here for examples:
+https://www.qtcentre.org/threads/39317-Suggestions-on-how-to-make-an-alarmclock-like-function
 */
 
 #ifndef TIME_SERVICE_H
@@ -12,41 +13,36 @@ https://github.com/amirkogit/QtTestGround/blob/master/learn_qml/QmlCppIntegratio
 // includes
 #include <QObject>
 #include <QtCore>
-
-// forward declarations
-class QQmlEngine;
-class QJSEngine;
-
+#include "minute_timer.h"
 
 class TimeService : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int hour READ hour NOTIFY timeChanged)
+    Q_PROPERTY(int minute READ minute NOTIFY timeChanged)
+//![0]
 
 public:
     explicit TimeService(QObject *parent = 0);
 
-    // invokable functions
-    /*
-    Q_INVOKABLE QString read_text_file(const QString &t_filePath);
-    Q_INVOKABLE void write_text_file(const QString &t_filePath, const QString &text);
-    Q_INVOKABLE bool file_exists(const QString &t_filePath) const;
-    */
+    ~TimeService() override
+    {
+        if (--instances == 0) {
+            timer->stop();
+        }
+    }
+
+    int minute() const { return timer->minute(); }
+    int hour() const { return timer->hour(); }
 
 signals:
+    void timeChanged();
 
-public slots:
-
+private:
+    QTime t;
+    static MinuteTimer *timer;
+    static int instances;
 };
 
-
-// Define Singleton type provider function (callback).
-static QObject *time_service_provider(QQmlEngine *engine, QJSEngine *scriptEngine)
-{
-    Q_UNUSED(engine)
-    Q_UNUSED(scriptEngine)
-
-    TimeService *result = new TimeService();
-    return result;
-}
 
 #endif // TIME_SERVICE_H

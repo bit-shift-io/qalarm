@@ -21,11 +21,18 @@ ItemDelegate {
 
                 readonly property date alarmDate: new Date(
                     model.year, model.month - 1, model.day, model.hour, model.minute)
-
+                
+                // time label
                 Label {
                     id: time_label
                     font.pixelSize: Qt.application.font.pixelSize * 2
                     text: dateColumn.alarmDate.toLocaleTimeString(window.locale, Locale.ShortFormat)
+                    //Layout.fillWidth: true
+                    // invisible button
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: alarm_dialog.open() // from main.qml // TODO: modify dialog
+                    }
                 }
                 RowLayout {
                     // repeat label

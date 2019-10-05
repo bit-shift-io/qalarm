@@ -6,6 +6,8 @@ import QtQuick.Window 2.11
 import Qt.labs.calendar 1.0
 import Qt.labs.settings 1.0
 import Qt.labs.platform 1.1 // sys tray
+import TimeService 1.0
+import QtMultimedia 5.13
 
 
 ApplicationWindow {
@@ -15,6 +17,32 @@ ApplicationWindow {
     height: 500
     visible: true
 
+    Audio {
+        id: audio_alarm
+        source: "alarm_analog_watch.ogg"
+    }
+
+    TimeService {
+        // this ticks over on the minute
+        // so is more accurate than a qml timer
+        id: time_service
+        onTimeChanged: {
+            // check for alarm change here
+            var params = {
+                hour: time_service.hour,
+                minute: time_service.minute,
+            }
+            var alarms = alarm_list_view.model.get_active_alarms(params)
+            console.log(alarms.length)
+            for (var i = 0; i < alarms.length; ++i) {
+                // TODO: trigger alarm
+                console.log("ALARM! " + time_service.hour + ":" + time_service.minute)
+                system_tray.showMessage("Alarm", "Beep beep!")
+                audio_alarm.play()
+            }
+        }
+    }
+    
 
     Connections {
         target: Qt.application
@@ -66,6 +94,7 @@ ApplicationWindow {
     
     // system tray
     SystemTrayIcon {
+        id: system_tray
         visible: true
         icon.source: "qrc:/res/bitshift.alarm.png"
 

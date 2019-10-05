@@ -6,12 +6,12 @@
             "type": "cppdbg",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/build/${workspaceFolderBasename}",
+            "program": "${workspaceFolder}/build/Debug/${workspaceFolderBasename}",
             "args": [
                 "qmljsdebugger=port:29777,block"
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/",
+            "cwd": "${workspaceFolder}/build/Debug/",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",

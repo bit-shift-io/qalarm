@@ -15,7 +15,8 @@ public:
   void registerTypes(const char *uri) override
   {
       Q_ASSERT(uri == QLatin1String("TimeService"));
-      qmlRegisterSingletonType<TimeService>(uri, 1, 0, "TimeService", time_service_provider);
+      //qmlRegisterSingletonType<TimeService>(uri, 1, 0, "TimeService", time_service_provider);
+      qmlRegisterType<TimeService>(uri, 1, 0, "TimeService");
   }
 };
 

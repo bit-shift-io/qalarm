@@ -55,17 +55,33 @@ ListModel {
 
     function save_data() {
         console.log("save data");
+        // write file
+        Util.write_text_file(database_file, JSON.stringify(get_alarm_list()))
+    }
+
+    function get_alarm_list() {
         var temp_data = [];
         // loop over children
         for (var i = 0; i < count; ++i) {
             var child = get_alarm(i);
             temp_data.push(child)
         }
-        // write file
-        Util.write_text_file(database_file, JSON.stringify(temp_data))
+        return temp_data
     }
 
- 
+    function get_active_alarms(params){
+        var result = []
+
+        // loop over children
+        for (var i = 0; i < count; ++i) {
+            var alarm = get_alarm(i);
+            if (alarm.hour == params.hour && alarm.minute == params.minute)
+                result.push(alarm)
+        }
+
+        return result
+    }
+
     function get_alarm(index) {
         var item = get(index);
         var alarm = {
