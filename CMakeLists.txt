@@ -46,7 +46,7 @@ set(HEADERS
 )
 
 set(RESOURCES
-    src/qml/qml.qrc
+    src/qml.qrc
     res/qml.qrc
 )
 

@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qtquickcontrols2.conf</file>
+        
+        <file>qml/main.qml</file>
+        <file>qml/TumblerDelegate.qml</file>
+        <file>qml/AlarmModel.qml</file>
+        <file>qml/AlarmDelegate.qml</file>
+        <file>qml/AlarmDialog.qml</file>
+        <file>qml/Config.qml</file>
+        <file>qml/qmldir</file>
+        
+
+        <file>qml/Style/qmldir</file>
+        <file>qml/Style/Style.qml</file>
+        <file>qml/Style/Theme.qml</file>
+        <file>qml/Style/ThemeDark.qml</file>
+        <file>qml/Style/ThemeLight.qml</file>
+    </qresource>
+</RCC>

@@ -8,15 +8,23 @@ import Qt.labs.settings 1.0
 import Qt.labs.platform 1.1 // sys tray
 import TimeService 1.0
 import QtMultimedia 5.13
-
-
+import Style 1.0
 
 ApplicationWindow {
-    
     id: window
+    title: application.name
     width: 350
     height: 500
     visible: true
+
+    // theme
+    font.family: Style.font_default_family
+    font.pointSize: Style.font_default_size
+    font.capitalization: Style.font_default_capitalization
+
+    Material.theme: Style.material_theme
+    Material.accent: Style.material_accent
+    
 
     Audio {
         id: audio_alarm

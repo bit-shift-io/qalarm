@@ -1,7 +1,11 @@
+/**
+Alarm Model
+This is the data container
+There are also helper functions for the data
+**/
 import QtQuick 2.11
 import Qt.labs.platform 1.1 // for standard paths
 import Util 1.0
-import "." // for singletons qmldir
 
 // Populate the model with some sample data.
 ListModel {

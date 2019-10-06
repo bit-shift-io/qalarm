@@ -56,16 +56,19 @@ int main(int argc, char *argv[])
     engine.addImportPath(".");
     engine.addImportPath("./lib");
     engine.addImportPath("./plugin");
-
+    engine.addImportPath("./qml");
+    engine.addImportPath("qrc:/qml");
+    
     // load main qml
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
     // debug, print qrc resources
-    /*
-    QDirIterator it(":/", QDirIterator::Subdirectories);
-    while (it.hasNext()) {
-        qDebug() << it.next();
-    }*/
+    if (false) {
+        QDirIterator it(":/", QDirIterator::Subdirectories);
+        while (it.hasNext()) {
+            qDebug() << it.next();
+        }
+    }
 
     return app.exec();
 }
