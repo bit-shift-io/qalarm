@@ -53,35 +53,22 @@ set(RESOURCES
 
 # for future use
 if(ANDROID)
+    message(STATUS "Build: Android")
     # as library
     add_library(
-        ${PROJECT_NAME}
+        ${PROJECT_NAME} SHARED
         ${SOURCES}
         ${HEADERS}
         ${RESOURCES}
     )
 else()
+    message(STATUS "Build: Desktop")
     # as executable
     add_executable(
         ${PROJECT_NAME}
         ${SOURCES}
         ${HEADERS}
         ${RESOURCES}    # App resources file
-    )
-endif()
-
-# more android specifics
-# https://github.com/LaurentGomila/qt-android-cmake
-if(ANDROID)
-    include(android/AddQtAndroidApk.cmake)
-    add_qt_android_apk(
-        my_app_apk my_app
-        NAME "My App"
-        VERSION_CODE 6 #  incremented everytime your app is updated on the play store
-        PACKAGE_NAME "io.bitshift.qalarm"
-        PACKAGE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/android
-        KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore myalias
-        INSTALL # install to default adb device
     )
 endif()
 
@@ -103,3 +90,20 @@ target_link_libraries(
 
 # plugins dir (external to binary)
 add_subdirectory(plugin)
+
+
+
+# more android specifics
+# https://github.com/LaurentGomila/qt-android-cmake
+if(ANDROID)
+    include(android/AddQtAndroidApk.cmake)
+    add_qt_android_apk(
+        "apk_name" ${PROJECT_NAME}
+        NAME "My App"
+        VERSION_CODE 1 #  incremented everytime your app is updated on the play store
+        PACKAGE_NAME "io.bitshift.qalarm"
+        PACKAGE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/android
+        KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore myalias
+        INSTALL # install to default adb device
+    )
+endif()
