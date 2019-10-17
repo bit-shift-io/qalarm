@@ -158,7 +158,14 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
     # set some toolchain variables used by androiddeployqt;
     # unfortunately, Qt tries to build paths from these variables although these full paths
     # are already available in the toochain file, so we have to parse them
+
+    # Bronson - added these lines to pickup the ndk and toolchain root
+    set(ANDROID_NDK ${QT_ANDROID_NDK_ROOT})
+    set(ANDROID_TOOLCHAIN_ROOT ${ANDROID_NDK}/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64)
+
     string(REGEX MATCH "${ANDROID_NDK}/toolchains/(.*)-(.*)/prebuilt/.*" ANDROID_TOOLCHAIN_PARSED ${ANDROID_TOOLCHAIN_ROOT})
+    message(STATUS "Toolchain parsed: ${ANDROID_TOOLCHAIN_PARSED}")
+
     if(ANDROID_TOOLCHAIN_PARSED)
         set(QT_ANDROID_TOOLCHAIN_PREFIX ${CMAKE_MATCH_1})
         set(QT_ANDROID_TOOLCHAIN_VERSION ${CMAKE_MATCH_2})
